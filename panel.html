@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mezun Paneli — Mezun Bilgi Sistemi | Sakarya Üniversitesi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-sayfa="panel">
+<section class="sayfa-bas"><div class="kap">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+    <div><p style="margin:0 0 4px">👋 Merhaba Mezun!</p><h1 id="adSoyad">Mezun Paneli</h1><p id="ozet"></p></div>
+    <button class="btn btn-beyaz" id="cikis" type="button">Çıkış yap</button>
+  </div>
+</div></section>
+
+<main><div class="kap">
+  <div class="uyari" style="margin-bottom:16px">Prototip: kaydettiğiniz bilgiler yalnızca bu tarayıcı oturumunda tutulur, sunucuya gönderilmez.</div>
+  <div class="panel-izgara">
+    <nav class="kart yan-menu" style="align-self:start;padding:10px">
+      <a href="#profil">İletişim Bilgileri</a>
+      <a href="#kariyer">Çalışma Bilgileri</a>
+      <a href="#kose">Mezun Köşesine Gönder</a>
+      <a href="anketler.html">Mezun Anketleri</a>
+      <a href="#" id="diplomaLink" target="_blank" rel="noopener">Diploma Talep ↗</a>
+    </nav>
+
+    <div>
+      <section class="kart" data-bolum="profil">
+        <h3>İletişim Bilgileri</h3>
+        <p class="soluk" style="margin-top:0">Duyuru ve hizmetlerin size ulaşabilmesi için bilgilerinizi güncel tutun.</p>
+        <form data-form="profil">
+          <div class="izgara i2">
+            <div class="alan"><label>E-posta</label><input name="eposta" type="email" placeholder="ornek@eposta.com"></div>
+            <div class="alan"><label>Cep telefonu</label><input name="telefon" type="tel" placeholder="05xx xxx xx xx"></div>
+            <div class="alan"><label>İkamet ili</label><select name="il"><option value="">Seçin</option></select></div>
+            <div class="alan"><label>LinkedIn profili</label><input name="linkedin" placeholder="https://www.linkedin.com/in/…"></div>
+          </div>
+          <div class="alan"><label style="font-weight:500"><input type="checkbox" name="iletisimIzni" style="width:auto;margin-right:8px">Üniversiteden etkinlik ve duyuru iletileri almak istiyorum.</label></div>
+          <button class="btn btn-ana" type="submit">Kaydet</button> <span data-mesaj></span>
+        </form>
+      </section>
+
+      <section class="kart bolum" data-bolum="kariyer">
+        <h3>Çalışma Bilgileri</h3>
+        <form data-form="kariyer">
+          <div class="izgara i2">
+            <div class="alan"><label>Çalışma durumu</label><select name="durum">
+              <option value="">Seçin</option><option>Çalışıyor</option><option>İş arıyor</option><option>Lisansüstü eğitime devam ediyor</option><option>Kendi işini kurdu</option><option>Askerlik / diğer</option></select></div>
+            <div class="alan"><label>Sektör</label><select name="sektor"><option value="">Seçin</option></select></div>
+            <div class="alan"><label>Kurum</label><input name="kurum"></div>
+            <div class="alan"><label>Unvan / pozisyon</label><input name="unvan"></div>
+            <div class="alan"><label>İşe başlama yılı</label><input name="baslama" inputmode="numeric" maxlength="4"></div>
+            <div class="alan"><label>Çalışılan il / ülke</label><input name="yer"></div>
+          </div>
+          <div class="alan"><label style="font-weight:500"><input type="checkbox" name="vitrin" style="width:auto;margin-right:8px">Mezun Vitrini'nde adım, programım ve kurumum görünebilir.</label></div>
+          <button class="btn btn-ana" type="submit">Kaydet</button> <span data-mesaj></span>
+        </form>
+      </section>
+
+      <section class="kart bolum" data-bolum="kose" id="kose">
+        <h3>Mezun Köşesine İçerik Gönder</h3>
+        <p class="soluk" style="margin-top:0">Gönderiler değerlendirildikten sonra yayımlanır.</p>
+        <form data-form="kose">
+          <div class="izgara i2">
+            <div class="alan"><label>Tür</label><select name="tur" required><option value="BasariHikayesi">Başarı Hikâyesi</option><option value="Yazi">Yazı</option><option value="Etkinlik">Etkinlik</option><option value="IsIlani">İş İlanı</option></select></div>
+            <div class="alan"><label>Başlık</label><input name="baslik" required maxlength="120"></div>
+          </div>
+          <div class="alan"><label>Kısa özet</label><input name="ozet" maxlength="240"></div>
+          <div class="alan"><label>Metin</label><textarea name="metin" rows="7" required></textarea><div class="ipucu">Kariyer yolculuğunuzu ve öğrencilerimize önerilerinizi paylaşabilirsiniz.</div></div>
+          <div class="alan"><label>Görsel (isteğe bağlı)</label><input name="gorsel" type="file" accept="image/*"></div>
+          <div class="alan"><label style="font-weight:500"><input type="checkbox" name="onay" required style="width:auto;margin-right:8px">İçeriğin adım ve programımla birlikte yayımlanmasına onay veriyorum.</label></div>
+          <button class="btn btn-ana" type="submit">Gönder</button> <span data-mesaj></span>
+        </form>
+      </section>
+    </div>
+  </div>
+</div></main>
+
+<script src="assets/veri.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script>
+const O = OTURUM.al();
+if(!O){ location.replace("giris.html"); }
+else {
+  document.getElementById("adSoyad").textContent = O.ad + " " + O.soyad;
+  document.getElementById("ozet").textContent = `${O.program} · ${O.birim} · ${O.yil} · Öğrenci No: ${O.no}`;
+  document.getElementById("diplomaLink").href = SITE.diplomaTalep;
+  const ilSel = document.querySelector("[name=il]");
+  Object.keys(MEZUN.ilKoordinat).sort((a,b)=>a.localeCompare(b,"tr")).forEach(i=>ilSel.add(new Option(i,i)));
+  const sSel = document.querySelector("[name=sektor]");
+  MEZUN.sektorler.forEach(([s])=>sSel.add(new Option(s,s))); sSel.add(new Option("Diğer","Diğer"));
+
+  const anahtar = f => "sau_mezun_"+f+"_"+O.no;
+  document.querySelectorAll("form[data-form]").forEach(f=>{
+    const ad = f.dataset.form;
+    if(ad!=="kose"){
+      try{ const k = JSON.parse(sessionStorage.getItem(anahtar(ad))||"{}");
+        Object.entries(k).forEach(([n,v])=>{ const el=f.elements[n]; if(!el) return; el.type==="checkbox"?el.checked=v:el.value=v; }); }catch(e){}
+    }
+    f.onsubmit = e=>{
+      e.preventDefault();
+      const m = f.querySelector("[data-mesaj]");
+      if(!f.checkValidity()){ f.reportValidity(); return; }
+      const v = {}; [...f.elements].forEach(el=>{ if(!el.name||el.type==="file") return; v[el.name] = el.type==="checkbox"?el.checked:el.value; });
+      if(ad==="profil" && v.eposta && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.eposta)){ m.innerHTML='<span class="hata" style="display:inline-block;padding:4px 10px">E-posta geçersiz</span>'; return; }
+      try{ sessionStorage.setItem(anahtar(ad), JSON.stringify(v)); }catch(e){}
+      m.innerHTML = ad==="kose" ? '<span class="basari" style="display:inline-block;padding:4px 10px">Gönderildi — değerlendirme sonrası yayımlanacak.</span>'
+                                : '<span class="basari" style="display:inline-block;padding:4px 10px">Kaydedildi</span>';
+      if(ad==="kose") f.reset();
+    };
+  });
+  const isaretle = ()=>{ const h=(location.hash||"#profil").slice(1); document.querySelectorAll(".yan-menu a").forEach(a=>a.classList.toggle("aktif",a.getAttribute("href")==="#"+h)); const s=document.querySelector(`[data-bolum="${h}"]`); if(s&&location.hash) s.scrollIntoView({behavior:"smooth",block:"start"}); };
+  addEventListener("hashchange",isaretle); isaretle();
+  document.getElementById("cikis").onclick = ()=>{ OTURUM.sil(); location.href="index.html"; };
+}
+</script>
+</body>
+</html>

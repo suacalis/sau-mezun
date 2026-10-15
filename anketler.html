@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mezun Anketleri — Mezun Bilgi Sistemi | Sakarya Üniversitesi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-sayfa="anket">
+<section class="sayfa-bas"><div class="kap">
+  <a class="geri" href="panel.html">← Mezun Paneli</a>
+  <h1>Mezun Anketleri</h1>
+  <p>Kariyer yolculuğunuzu paylaşarak programlarımızın gelişimine katkı sunun.</p>
+</div></section>
+
+<main><div class="kap" style="max-width:860px">
+  <div id="liste"></div>
+  <form id="anket" class="kart gizli" novalidate>
+    <h2>2026 Mezun Memnuniyet ve İstihdam Anketi</h2>
+    <p class="soluk">Yaklaşık 5 dakika. Yanıtlarınız toplu olarak raporlanır ve program akreditasyonu / kalite güvencesi çalışmalarında kullanılır.</p>
+    <div class="uyari" style="margin-bottom:16px">Prototip: yanıtlar hiçbir yere gönderilmez. Gerçek kurulumda KVKK aydınlatma metni bağlantısı burada yer almalıdır.</div>
+
+    <div class="alan"><label>1. Mezuniyet sonrası şu anki durumunuz</label>
+      <select name="durum" required><option value="">Seçin</option><option>Alanımda çalışıyorum</option><option>Alanım dışında çalışıyorum</option><option>İş arıyorum</option><option>Lisansüstü eğitime devam ediyorum</option><option>Kendi işimi kurdum</option><option>Diğer</option></select></div>
+    <div class="alan"><label>2. Mezuniyetten sonra ilk işinize ne kadar sürede başladınız?</label>
+      <select name="sure"><option value="">Seçin</option><option>Mezun olmadan önce</option><option>0–6 ay</option><option>6–12 ay</option><option>1–2 yıl</option><option>2 yıldan fazla</option><option>Henüz çalışmadım</option></select></div>
+
+    <h3 style="margin-top:22px">3. Programınızın sizi hazırlama düzeyi</h3>
+    <p class="soluk" style="margin-top:0">1 = Hiç yeterli değil · 5 = Çok yeterli</p>
+    <div id="likert"></div>
+
+    <div class="alan" style="margin-top:16px"><label>4. Programı bir yakınınıza önerir misiniz? (0–10)</label>
+      <input type="range" name="nps" min="0" max="10" value="7" oninput="this.nextElementSibling.textContent=this.value"><b>7</b></div>
+    <div class="alan"><label>5. Programın geliştirilmesi için önerileriniz</label><textarea name="oneri" rows="4"></textarea></div>
+    <div id="m"></div>
+    <button class="btn btn-ana" type="submit">Anketi Gönder</button>
+    <button class="btn btn-cizgi" type="button" id="vazgec">Vazgeç</button>
+  </form>
+</div></main>
+
+<script src="assets/veri.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script>
+const O = OTURUM.al();
+const $ = id => document.getElementById(id);
+const anahtar = () => "sau_mezun_anket2026_" + (O&&O.no);
+function liste(){
+  if(!O){
+    $("liste").innerHTML = `<div class="kart"><h3>Giriş yapmanız gerekir</h3><p class="soluk">Mezun anketlerine katılmak için mezun hesabınızla giriş yapın.</p><a class="btn btn-ana" href="giris.html">Mezun Girişi</a></div>`;
+    return;
+  }
+  let dolu=false; try{ dolu=!!sessionStorage.getItem(anahtar()); }catch(e){}
+  $("liste").innerHTML = `<div class="izgara">
+    <div class="kart" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <div><span class="rozet ${dolu?"yesil":"amber"}">${dolu?"Tamamlandı":"Açık"}</span><h3 style="margin:8px 0 4px">2026 Mezun Memnuniyet ve İstihdam Anketi</h3><span class="soluk">Son katılım: 31.12.2026 · ~5 dk</span></div>
+      <button class="btn ${dolu?"btn-cizgi":"btn-ana"}" id="ac" type="button">${dolu?"Yanıtlarımı gör":"Ankete katıl"}</button></div>
+    <div class="kart" style="opacity:.7"><span class="rozet">Kapandı</span><h3 style="margin:8px 0 4px">2025 Mezun İzleme Anketi</h3><span class="soluk">Katılım süresi doldu.</span></div></div>`;
+  $("ac").onclick = ()=>{ $("liste").classList.add("gizli"); $("anket").classList.remove("gizli"); doldur(); };
+}
+const MADDELER = ["Alan bilgisi","Analitik düşünme ve problem çözme","Yazılı ve sözlü iletişim","Dijital / teknik beceriler","Takım çalışması","Etik ve mesleki sorumluluk","Staj ve uygulama deneyimi"];
+$("likert").innerHTML = `<div class="tablo-sar" style="max-height:none"><table><thead><tr><th>Beceri</th>${[1,2,3,4,5].map(n=>`<th style="text-align:center">${n}</th>`).join("")}</tr></thead><tbody>
+  ${MADDELER.map((m,i)=>`<tr><td>${m}</td>${[1,2,3,4,5].map(n=>`<td style="text-align:center"><input type="radio" name="l${i}" value="${n}" style="width:auto" aria-label="${m}: ${n}"></td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+function doldur(){
+  try{ const v=JSON.parse(sessionStorage.getItem(anahtar())||"null"); if(!v) return;
+    Object.entries(v).forEach(([n,d])=>{ const el=$("anket").elements[n]; if(!el) return; if(el instanceof RadioNodeList){ el.value=d; } else el.value=d; });
+    $("anket").elements.nps.nextElementSibling.textContent = v.nps; }catch(e){}
+}
+$("anket").onsubmit = e=>{
+  e.preventDefault();
+  const f=$("anket"); if(!f.elements.durum.value){ $("m").innerHTML='<div class="hata" style="margin-bottom:12px">Lütfen 1. soruyu yanıtlayın.</div>'; return; }
+  const v={}; ["durum","sure","nps","oneri"].forEach(n=>v[n]=f.elements[n].value); MADDELER.forEach((_,i)=>v["l"+i]=f.elements["l"+i].value);
+  try{ sessionStorage.setItem(anahtar(), JSON.stringify(v)); }catch(e){}
+  f.classList.add("gizli"); $("liste").classList.remove("gizli"); liste();
+  $("liste").insertAdjacentHTML("afterbegin",'<div class="basari" style="margin-bottom:14px">Teşekkür ederiz! Yanıtlarınız kaydedildi.</div>');
+};
+$("vazgec").onclick = ()=>{ $("anket").classList.add("gizli"); $("liste").classList.remove("gizli"); };
+liste();
+</script>
+</body>
+</html>
